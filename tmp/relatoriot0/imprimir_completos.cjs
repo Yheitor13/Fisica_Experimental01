@@ -1,0 +1,6 @@
+const {chromium}=require('C:/Users/HEITOR/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright');
+(async()=>{const b=await chromium.launch({executablePath:'C:/Program Files/Google/Chrome/Application/chrome.exe',headless:true});
+for(const [src,out] of [['Resolucao_Completa','Calculos_Corrigidos_Resolucao_Completa.pdf'],['Equacoes_do_RelatorioT0','Equações_do_RelatórioT0.pdf']]){const p=await b.newPage();await p.goto('file:///'+process.cwd().replaceAll('\\','/')+'/tmp/relatoriot0/'+src+'.html');
+await p.addStyleTag({content:'body{width:176mm}'}); await p.emulateMedia({media:'print'}); console.log('Adjusted',await p.locator('math').evaluateAll(ms=>ms.map(m=>{const w=m.firstElementChild.getBoundingClientRect().width;const max=m.getBoundingClientRect().width;if(w>max){const fs=parseFloat(getComputedStyle(m).fontSize);m.style.fontSize=(fs*max/w*.98)+'px';return {w,max};}return null;}).filter(Boolean))); console.log(src,await p.locator('section').evaluateAll(ss=>ss.map((s,i)=>({page:i+1,height:Math.round(s.getBoundingClientRect().height),wide:[...s.querySelectorAll('math')].filter(m=>m.getBoundingClientRect().width>660).length}))));
+await p.pdf({path:out,format:'A4',preferCSSPageSize:true,printBackground:true});await p.close();}await b.close();})();
+

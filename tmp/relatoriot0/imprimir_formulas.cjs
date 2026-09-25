@@ -1,0 +1,2 @@
+const {chromium}=require('C:/Users/HEITOR/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright');
+(async()=>{const b=await chromium.launch({executablePath:'C:/Program Files/Google/Chrome/Application/chrome.exe',headless:true});const p=await b.newPage();await p.goto('file:///'+process.cwd().replaceAll('\\','/')+'/tmp/relatoriot0/formulas.html');await p.pdf({path:'Fórmulas_RelatórioT0.pdf',format:'A4',preferCSSPageSize:true,printBackground:true});await b.close();})();
